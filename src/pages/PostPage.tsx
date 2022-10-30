@@ -38,7 +38,9 @@ const PostPage: FC = () => {
                 commentsCount={3}
                 tags={postData?.tags}
                 isFullPost>
-                <ReactMarkdown children={postData?.text}/>
+                <ReactMarkdown
+                    // @ts-ignore
+                    children={postData?.text}/>
             </Post>
             <CommentsBlock title={'Комментарии'}
                 items={postData}
