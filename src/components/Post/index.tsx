@@ -43,6 +43,8 @@ const Post: FC<PostType> = (props) => {
         return <PostSkeleton/>
     }
 
+    const tagsArr = tags?.join().replace(/ /g,'').split(',').filter(el => el != "")
+
     const onClickRemovePost = async (id: string | undefined) => {
         await axios.post(`/posts/${id}`)
             .then(res => res)
@@ -73,8 +75,8 @@ const Post: FC<PostType> = (props) => {
                         <Link to={`/posts/${id}`}>{title}</Link>
                     </h2>
                     <ul className={styles.tags}>
-                        {tags?.map(tag =>
-                            <li key={tag}>
+                        {tagsArr?.map((tag, i) =>
+                            <li key={i}>
                                 <Link to={`/tag/${tag}`}>{tag}</Link>
                             </li>
                         )}

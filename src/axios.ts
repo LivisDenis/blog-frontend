@@ -1,9 +1,9 @@
 import axios from "axios";
 
-export const baseUrl = process.env.REACT_APP_API_URL
-
+export const baseUrl = 'https://livis-blog.herokuapp.com'
+// process.env.REACT_APP_API_URL
 const instance = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
+    baseURL: 'https://livis-blog.herokuapp.com',
 });
 
 instance.interceptors.request.use((config) => {

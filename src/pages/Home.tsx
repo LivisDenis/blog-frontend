@@ -20,9 +20,11 @@ const Home: FC = () => {
     const [user, setUser] = useState<UserType>()
 
     useEffect(() => {
-        axios.get<UserType>('/auth/me')
-            .then(res => setUser(res.data))
-            .then(() => setIsLoading(false))
+        if (localStorage.getItem('token')) {
+            axios.get<UserType>('/auth/me')
+                .then(res => setUser(res.data))
+                .then(() => setIsLoading(false))
+        }
         dispatch(fetchPosts())
     }, [])
 
@@ -34,7 +36,7 @@ const Home: FC = () => {
             </Tabs>
             <Grid container spacing={4}>
                 <Grid xs={8} item>
-                    {status === 'loading' || !user
+                    {status === 'loading'
                         ? [...Array(3)].map((_, i) => <Skeleton key={i}/>)
                         : posts.map(post =>
                             <Post

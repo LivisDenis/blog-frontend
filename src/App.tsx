@@ -12,8 +12,10 @@ import axios from "./axios";
 const App = () => {
 
     useEffect(() => {
-        axios.get('/auth/me')
-            .then(res => res)
+        if (localStorage.getItem('token')) {
+            axios.get('/auth/me')
+                .then(res => res)
+        }
     }, [])
 
     return (
