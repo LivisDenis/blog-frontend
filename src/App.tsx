@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Navigate, Route, Routes} from "react-router-dom";
 import Home from "./pages/Home";
 import PostPage from "./pages/PostPage";
@@ -10,11 +10,12 @@ import AddPost from "./pages/AddPost";
 import axios from "./axios";
 
 const App = () => {
+    const [user, setUser] = useState()
 
     useEffect(() => {
         if (localStorage.getItem('token')) {
             axios.get('/auth/me')
-                .then(res => res)
+                .then(res => setUser(res.data))
         }
     }, [])
 
@@ -25,10 +26,16 @@ const App = () => {
                 <Routes>
                     <Route path='/' element={<Home/>}/>
                     <Route path='/posts/:id' element={<PostPage/>}/>
-                    <Route path='/posts/create' element={<AddPost/>}/>
-                    <Route path='/posts/:id/edit' element={<AddPost/>}/>
-                    <Route path='/login' element={<Login/>}/>
-                    <Route path='/registration' element={<Registration/>}/>
+                    <Route path='/posts/popular' element={<Home/>}/>
+                    {user ? <>
+                            <Route path='/posts/create' element={<AddPost/>}/>
+                            <Route path='/posts/:id/edit' element={<AddPost/>}/>
+                        </>
+                        : <>
+                            <Route path='/login' element={<Login/>}/>
+                            <Route path='/registration' element={<Registration/>}/>
+                        </>
+                    }
                     <Route path="*" element={<Navigate to="/" replace />}/>
                 </Routes>
             </Container>
